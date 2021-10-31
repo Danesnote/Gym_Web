@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuts.mapper.MemberMapper">
+
+
+  <resultMap type="com.nuts.domain.MemberVO" id="memberMap">
+    <id property="userid" column="userid"/>
+    <result property="userid" column="userid"/>
+    <result property="password" column="password"/>
+    <result property="user_name" column="user_name"/>
+    <result property="age" column="age"/>
+    <result property="weight" column="weight"/>
+    <result property="gender" column="gender"/>
+    <result property="phone" column="phone"/>
+    <result property="email_auth_key" column="email_auth_key"/>
+    <result property="email_auth_yn" column="email_auth_yn"/>
+    <result property="reg_dt" column="reg_dt"/>
+    <result property="is_admin" column="is_admin"/>
+    <result property="point" column="point"/>
+    <result property="score" column="score"/>
+    <result property="pt_userid" column="pt_userid"/>
+    <collection property="authList" resultMap="authMap">
+    </collection> 
+  </resultMap>
+  
+  <resultMap type="com.nuts.domain.AuthVO" id="authMap">
+    <result property="userid" column="userid"/>
+    <result property="auth" column="auth"/>
+  </resultMap>
+  
+  	<delete id="delete">
+		delete user_tb where userid = #{bno}
+	</delete>
+	
+  
+  <select id="read" resultMap="memberMap">
+SELECT 
+  mem.userid, password, user_name, age, weight, gender, phone, email_auth_key, email_auth_yn, reg_dt, is_admin, point, score, pt_userid, auth
+FROM 
+  user_tb mem LEFT OUTER JOIN user_auth auth on mem.userid = auth.userid 
+WHERE mem.userid = #{userid} 
+  </select> <!-- LEFT OUTER JOIN 으로 auth까지 같이 select -->
+  
+</mapper>
