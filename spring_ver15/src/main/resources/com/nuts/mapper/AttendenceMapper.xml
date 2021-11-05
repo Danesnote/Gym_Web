@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nuts.mapper.AttendenceMapper">
+
+<select id="getAttendenceList" resultType="com.nuts.domain.AttendenceVO">
+  select * from user_check
+</select> 
+
+<insert id="insert" parameterType="map">
+	{call
+		declare
+		begin
+			insert into user_check(userId, start_time)
+			values (#{userId}, #{start_time});
+	
+			update user_tb
+			set point = point + 1
+			where userId = (#{userId});
+			
+		end
+	}
+
+	
+
+</insert>
+
+<select id="getAttendenceListbyId" resultType="com.nuts.domain.AttendenceVO">
+  select * from user_check
+   where userId = (#{userId})
+</select> 
+
+</mapper>
